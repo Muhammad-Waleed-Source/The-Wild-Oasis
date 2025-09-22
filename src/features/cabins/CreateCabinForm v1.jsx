@@ -14,6 +14,7 @@ import { createCabin } from "../../services/apiCabins";
 function CreateCabinForm() {
   const { register, handleSubmit, reset, getValues, formState } = useForm();
   const { errors } = formState;
+  
   const queryClient = useQueryClient();
 
   const { mutate, isPending: isCreating } = useMutation({
@@ -27,7 +28,7 @@ function CreateCabinForm() {
   });
 
   function onSubmit(data) {
-    mutate({...data, image: data.image[0]});
+    mutate({ ...data, image: data.image[0] });
   }
 
   return (
@@ -94,7 +95,6 @@ function CreateCabinForm() {
 
       <FormRow
         label="Description for website"
-        disabled={isCreating}
         error={errors?.description?.message}
       >
         <Textarea
