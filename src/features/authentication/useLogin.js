@@ -10,16 +10,9 @@ export function useLogin() {
   const { mutate: login, isLoading } = useMutation({
     mutationFn: ({ email, password }) => loginApi({ email, password }),
 
-    onSuccess: async () => {
-      // Wait for Supabase to refresh its session and return current user
-      const user = await getCurrentUser();
-
-      if (user) {
-        queryClient.setQueryData(["user"], user);
-        navigate("/dashboard", { replace: true });
-      } else {
-        toast.error("Could not fetch user session. Please try again.");
-      }
+    onSuccess: (user) => {
+      queryClient.setQueryData(["user"], user.user);
+      navigate("/dashboard", { replace: true });
     },
 
     onError: () => {
